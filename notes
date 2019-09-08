@@ -1,0 +1,181 @@
+from . import views
+---------------------------
+means import views.py module from current directory.
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+
+The path() function is passed four arguments, two required: route and view.
+
+route -- is a string that contains a URL pattern.
+view -- When Django finds a matching pattern, it calls the specified 		view function.
+
+
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('polls/', include('pollsapp.urls')),
+
+]
+
+-- When to use include()
+
+You should always use include() when you include other URL patterns.
+
+here v adds urls to each pages n our app.
+
+path('admin/', admin.site.urls) --This line means that for every URL that starts with admin/, Django will find a corresponding view.
+
+
+
+
+once created an app,
+---------------------------
+
+-- first is to create our own models
+
+so any model v create is basically a class.
+
+in polls app v create two models
+one for quesion and other for choices.
+
+class Question(models.Model):
+
+here Questtion inherits properties of models.MOdel.
+
+
+
+after specifying models, add app to the project and then run
+the command,
+-- python manage.py makemigrations polls
+
+By running makemigrations, you’re telling Django that you’ve made some changes to your models and need to create migrations for those changes.
+
+
+Now, run migrate to create those model tables in your database.
+-- python manage.py migrate
+
+
+let mpve to django shell,
+
+-- python manage.py shell
+
+adding question to Questions model
+---------------------------------------
+from pollsapp.models import Questions, Choice
+from django.utils import timezone
+q = Questions(question_text = 'what is name? ', pub_date = timezone.now())
+
+-- here v import timezone package from django.utils module which include many django utilites.
+
+v just created a question bt not added to database.
+to save this,
+use,
+
+-- q.save()
+
+-- q.id
+
+-- q.question_text
+
+-- q.pub_date
+<Questions: What is Your favourite python framework?>
+
+
+look for question bases on primary key,
+--Questions.objects.get(pk=1)
+	returns <Questions: What is Your favourite python framework?>
+
+
+-- next create some choices for out questions,
+
+-- first check choices, use choice_set 
+
+q = Questions.objects.get(pk=1)
+
+q.choice_set.all()
+
+-- returns a query set
+
+-- create choices for that question
+use,
+
+q.choice_set.create(choice_text='Django', votes=0)
+q.choice_set.create(choice_text='Flask', votes=0)
+
+
+
+
+
+
+next creat an admin
+---------------------
+
+-- python manage.py createsuperuser
+
+username: JISS
+passwor: batman
+
+
+
+-- later import models in admin.py and register it with admin.
+
+# import models from models module
+from .models import Questions, Choice
+
+# Register your models here.
+
+admin.site.register(Questions)
+admin.site.register(Choice)
+
+
+-- next we want to see questions and list of choices together in the questions not seperate sections.
+
+to do that create two classes:
+
+
+
+-- TabularInline class provides a tabular like representation for each choices
+
+class ChoiceInline(admin.TabularInline):
+    model = Choice
+    extra = 3
+
+
+--The ModelAdmin class is the representation of a model in the admin interface.
+
+-- fieldsets is a list of two-tuples, in which each two-tuple represents a <fieldset> on the admin form page.
+
+The two-tuples are in the format (name, field_options), where name is a string representing the title of the fieldset and field_options is a dictionary of information about the fieldset, including a list of fields to be displayed in it.
+
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['question_text']}),
+        ('Date Information', {'fields': ['pub_date'], 'classes':
+            ['collapse']}),
+    ]
+    inlines = [ChoiceInline]
+
+
+-- later register it with admin
+admin.site.register(Questions, QuestionAdmin)
+
+	
+
+# change the default header and title of admin page
+admin.site.site_header = 'Pollster Admin'
+admin.site.site_title = 'Pollster Admin Area'
+
+
+
+
+
+
+
+
+
+
+
