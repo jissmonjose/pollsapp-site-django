@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
 <head>
     <title>
         Welcome
@@ -7,4 +7,15 @@
 <body>
     <h1>Django</h1>
 </body>
-</html>
+</html> -->
+
+
+<!-- here v need to extend the base.html -->
+<!-- then only the layout given in the base html file will came to effect here -->
+
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Django</h1>
+    <h2>Flask</h2>
+{% endblock %}
+

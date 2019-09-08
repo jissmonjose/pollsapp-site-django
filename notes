@@ -253,6 +253,19 @@ modify DIRS by adding,
 -- 'DIRS': [TEMPLATE_DIR],
 
 
+Next v gonna deal with the front end of app.
+------------------------------------------------
+
+so v gonna create a base.html file in templates folder
+and place base layout of the page in it. by this v dont want to 
+add the basic layout in all the pages.
+for eg, bootstrap cdn
+
+
+
+
+
+
 
 
 
