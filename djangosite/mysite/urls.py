@@ -22,6 +22,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # when v navigate to 'pollsapp/'.  it in
+    # includes pollsapp.urls file, and inthat urls.py file,
+    # it calls the views.index. and render the pollsapp/index.html
+
     path('pollsapp/', include('pollsapp.urls')),
 
 ]

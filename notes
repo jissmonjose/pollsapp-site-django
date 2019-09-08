@@ -159,6 +159,9 @@ class QuestionAdmin(admin.ModelAdmin):
     ]
     inlines = [ChoiceInline]
 
+-- here v collapse or hide the date when the page loads
+	by setting classes as collapse.
+
 
 -- later register it with admin
 admin.site.register(Questions, QuestionAdmin)
@@ -168,6 +171,88 @@ admin.site.register(Questions, QuestionAdmin)
 # change the default header and title of admin page
 admin.site.site_header = 'Pollster Admin'
 admin.site.site_title = 'Pollster Admin Area'
+
+
+
+next v work with front end
+---------------------------
+render - to render or provide the templates for our project.
+
+so update the views.py 
+
+from .models import Questions, Choice
+
+later render our template, so define a func
+
+def index(request):
+	return render(request, 'pollsapp/index.html')
+
+
+next create a urls.py file in pollsapp
+-------------------------------------------
+each apps have its own urls.p file
+here v speicfy urls to the views.py file.
+
+
+
+from django.urls import path
+from . import views
+
+app_name = 'pollsapp'
+
+# create a route and calls the view function.
+# and give a name for that route.
+urlpatterns = [
+    path('', views.index, name='index')
+]
+
+
+
+later v import this urls to urls.py file in project dir.
+----------------------------------------------------------
+
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('pollsapp/', include('pollsapp.urls')),
+
+]
+
+-- here  v import include function since here v include another urls file.
+
+working
+-----------------
+
+# when v bavigate to 'pollsapp/'.  it 
+# includes pollsapp.urls file, and in that urls.py file,
+# it calls the views.index, and then finally render the pollsapp/       index.html file
+
+
+--if v run the server and navigate to pollsapp/
+it returns error since template not exit so create it 
+-- later create an index.html.
+
+for that v create a new create under main project dir,
+--mkdir templates
+--cd templates && mkdir pollsapp/
+--cd pollsapp && touch index.html
+
+
+later add this templates dir to setting.py files
+-------------------------------------------------------
+
+-- TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+
+
+in TEMPLATES list,
+
+modify DIRS by adding,
+-- 'DIRS': [TEMPLATE_DIR],
+
+
 
 
 
