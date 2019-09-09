@@ -1,21 +1,31 @@
-<!-- <html>
-<head>
-    <title>
-        Welcome
-    </title>
-</head>
-<body>
-    <h1>Django</h1>
-</body>
-</html> -->
-
 
 <!-- here v need to extend the base.html -->
 <!-- then only the layout given in the base html file will came to effect here -->
 
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Django</h1>
-    <h2>Flask</h2>
+        <h1 class="text-center mb-3">Poll Questions</h1>
+        {% if latest_question_list %}
+            {% for q in  latest_question_list%}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="lead">
+                            <!-- outputs each questions in the latest_question_list -->
+                            {{q.question_text}}
+                        </p>
+
+                        <!-- here v place a link to vote that goes to vote page-->
+
+                        <!-- so v use template syntax for url instead of regular link -->
+
+                        <!-- first give url, later give appname and view function to be loaded as a key:value and give the id for that specific question v need -->
+
+                        <a href="{% url 'pollsapp:detail' q.id %}" class="btn btn-primary btn-sm">Vote Now</a>
+                    </div>
+                </div> 
+            {% endfor %}
+        {% else %}
+            <p>No Polls done yet</p>
+        {% endif %}
 {% endblock %}
 

@@ -249,7 +249,7 @@ later add this templates dir to setting.py files
 
 in TEMPLATES list,
 
-modify DIRS by adding,
+-modify DIRS by adding,
 -- 'DIRS': [TEMPLATE_DIR],
 
 
@@ -259,7 +259,29 @@ Next v gonna deal with the front end of app.
 so v gonna create a base.html file in templates folder
 and place base layout of the page in it. by this v dont want to 
 add the basic layout in all the pages.
-for eg, bootstrap cdn
+for eg, bootstrap cdn.
+
+
+use syntax below, 
+ {% block content %}{% endblock %}
+
+
+later move to index.html and extends the file to base.html
+using ,
+	{% block content %}
+	{% extends 'base.html' %}
+	 <h1>Django</h1>
+    	 <h2>Flask</h2>
+	{% endblock %}
+
+
+-- next v need to show the questions and choices in index.html file. 
+   right now it just shows h1 and h2 in index page.
+   so v need to pass in the data to index.html file.
+
+
+-- when v want to pass a data in html file.
+	v use, {{}} -- double curly braces
 
 
 
